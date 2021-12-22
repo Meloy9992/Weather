@@ -19,25 +19,26 @@ public class TaskImpl implements TaskInterface {
         float feelNight;
         DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Формат округления чисел
 
-        JSONArray array = (JSONArray) jsonObject.get("daily");
+        JSONArray array = (JSONArray) jsonObject.get("daily"); //Получение массива daily из полученного Json
+
         Iterator iterator = array.iterator();
         int j = 1;
 
         for (int i = 0; i < 5; i++) {
 
             JSONObject next = (JSONObject) iterator.next();
-            JSONObject tempObject = (JSONObject) next.get("temp");
-            JSONObject feelsLikeObject = (JSONObject) next.get("feels_like");
+            JSONObject tempObject = (JSONObject) next.get("temp"); //Получение списка объектов temp
+            JSONObject feelsLikeObject = (JSONObject) next.get("feels_like"); //Получение списка объектов temp
 
-            day = Float.parseFloat(tempObject.get("day").toString());
-            feelDay = Float.parseFloat(feelsLikeObject.get("day").toString());
-            night = Float.parseFloat(tempObject.get("night").toString());
-            feelNight = Float.parseFloat(feelsLikeObject.get("night").toString());
+            day = Float.parseFloat(tempObject.get("day").toString()); //Получение и преобразование объекта day в тип float
+            feelDay = Float.parseFloat(feelsLikeObject.get("day").toString()); //Получение и преобразование объекта feelDay в тип float
+            night = Float.parseFloat(tempObject.get("night").toString()); //Получение и преобразование объекта night в тип float
+            feelNight = Float.parseFloat(feelsLikeObject.get("night").toString()); //Получение и преобразование объекта feelNight в тип float
 
-            day = getCelsiusFromKelvin(day);
-            feelDay = getCelsiusFromKelvin(feelDay);
-            night = getCelsiusFromKelvin(night);
-            feelNight = getCelsiusFromKelvin(feelNight);
+            day = getCelsiusFromKelvin(day); //Перевод из кельвина в цельсии
+            feelDay = getCelsiusFromKelvin(feelDay); //Перевод из кельвина в цельсии
+            night = getCelsiusFromKelvin(night); //Перевод из кельвина в цельсии
+            feelNight = getCelsiusFromKelvin(feelNight); //Перевод из кельвина в цельсии
 
             System.out.println("День " + j);
             System.out.println();
@@ -47,6 +48,7 @@ public class TaskImpl implements TaskInterface {
             System.out.println("Ночь: " + decimalFormat.format(night) + " C°");
             System.out.println("Ощущается как: " + decimalFormat.format(feelNight) + " C°" + " (" + decimalFormat.format(getDifferenceBetweenFeelsActual(feelNight, night)) + " C°" + ")");
             System.out.println();
+
             j++;
             iterator.hasNext();
         }
@@ -62,8 +64,8 @@ public class TaskImpl implements TaskInterface {
             JSONObject next = (JSONObject) iterator.next();
             long sunrise = Long.parseLong(next.get("sunrise").toString());
             long sunset = Long.parseLong(next.get("sunset").toString());
-            String currentDate = convertUnixDate(next.get("dt").toString());
-            long dayLightHours = sunset - sunrise;
+            String currentDate = convertUnixDate(next.get("dt").toString()); // Конвертация UNIX даты в календарную дату
+            long dayLightHours = sunset - sunrise; //Вычисление продолжительности светового дня
             dayLightList.add("Прожолжительность светового дня " + currentDate + " = " + dayLightHours);
             System.out.println(dayLightList.get(i));
         }
