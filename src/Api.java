@@ -6,7 +6,7 @@ import java.net.URLConnection;
 public class Api {
     private String lat = "48.7194";
     private String lon = "44.5018";
-    private String apiKey = "c88227ea6d94d75167751698059d9337";
+    private String apiKey = ""; //YOUR API KEY
 
     public String getApi = "api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=alerts&appid=" + apiKey;
 
